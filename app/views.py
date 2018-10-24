@@ -10,10 +10,10 @@ def index():
 
     humidity, temp = control.getCurrentTempHum()
 
-        templateData = {
-            'humidity': humidity,
-            'temp': temp,
-        }
+    templateData = {
+        'humidity': humidity,
+        'temp': temp,
+    }
 
     # Передаем словарь «templateData» в HTML-шаблон,
     # а затем возвращаем его пользователю:
