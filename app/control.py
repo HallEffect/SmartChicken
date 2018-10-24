@@ -56,77 +56,81 @@ def writeLog(msg):
     f.write("{} - {}".format(now, msg))
     f.close()
 
-while True:
 
-    time.sleep(60)
+def getCurrentTempHum():
+    return Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_SENSOR_PIN)
 
-    now = datetime.datetime.now()
+# while True:
 
-    # Получаем текущую температуру и влажность
-    humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_SENSOR_PIN)
+#     time.sleep(60)
 
-    #
-    # Работа с обогревателем
-    #
-    if temp < MIN_ALLOWED_TEMP:
-        RADIATOR.on()
-        writeLog("{}°C {}% - Включение радиатора".format(temp, humidity))
+#     now = datetime.datetime.now()
 
-    if temp > MAX_ALLOWED_TEMP:
-        RADIATOR.off()
-        writeLog("{}°C {}% - Отключение радиатора".format(temp, humidity))
+#     # Получаем текущую температуру и влажность
+#     humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_SENSOR_PIN)
 
-    # чтобы одновременно не срабатывали сразу несколько реле
-    time.sleep(5)
+#     #
+#     # Работа с обогревателем
+#     #
+#     if temp < MIN_ALLOWED_TEMP:
+#         RADIATOR.on()
+#         writeLog("{}°C {}% - Включение радиатора".format(temp, humidity))
 
-    #
-    # Утром включаем сначала дежурное освещение
-    #
-    if now.hour == WAKE_UP_HOUR:
-        HEAT_LAMP.on()
+#     if temp > MAX_ALLOWED_TEMP:
+#         RADIATOR.off()
+#         writeLog("{}°C {}% - Отключение радиатора".format(temp, humidity))
 
-        writeLog("{}°C {}% - Включение инфракрасной лампы".format(temp, humidity))
+#     # чтобы одновременно не срабатывали сразу несколько реле
+#     time.sleep(5)
 
-        # Через 50 минут включаем основное
-        if (now.minute > DELAY_MAIN_LAMP_WAKEUP):
-            MAIN_LAMP.on()
+#     #
+#     # Утром включаем сначала дежурное освещение
+#     #
+#     if now.hour == WAKE_UP_HOUR:
+#         HEAT_LAMP.on()
 
-            # чтобы одновременно не срабатывали сразу несколько реле
-            time.sleep(5)
+#         writeLog("{}°C {}% - Включение инфракрасной лампы".format(temp, humidity))
 
-            # Отключаем дежурное (инфракрасная лампа)
-            HEAT_LAMP.off()
+#         # Через 50 минут включаем основное
+#         if (now.minute > DELAY_MAIN_LAMP_WAKEUP):
+#             MAIN_LAMP.on()
 
-            writeLog("{}°C {}% - Отключение инфракрасной лампы, включение основного".format(temp, humidity))
+#             # чтобы одновременно не срабатывали сразу несколько реле
+#             time.sleep(5)
+
+#             # Отключаем дежурное (инфракрасная лампа)
+#             HEAT_LAMP.off()
+
+#             writeLog("{}°C {}% - Отключение инфракрасной лампы, включение основного".format(temp, humidity))
 
 
-    #
-    # Если было отключение электричества включаем все что нужно
-    #
-    if now.hour > WAKE_UP_HOUR and now.hour < SLEEP_HOUR:
-        MAIN_LAMP.on()
+#     #
+#     # Если было отключение электричества включаем все что нужно
+#     #
+#     if now.hour > WAKE_UP_HOUR and now.hour < SLEEP_HOUR:
+#         MAIN_LAMP.on()
 
-    #
-    # Отключение света вечером
-    #
-    if now.hour == SLEEP_HOUR:
+#     #
+#     # Отключение света вечером
+#     #
+#     if now.hour == SLEEP_HOUR:
 
-        # Включаем дежурное освещение на DELAY_HEAT_LAMP_SLEEP минут
-        if now.minute < DELAY_HEAT_LAMP_SLEEP:
-           HEAT_LAMP.on()
+#         # Включаем дежурное освещение на DELAY_HEAT_LAMP_SLEEP минут
+#         if now.minute < DELAY_HEAT_LAMP_SLEEP:
+#            HEAT_LAMP.on()
 
-           writeLog("{}°C {}% - Включение инфракрасной лампы".format(temp, humidity))
+#            writeLog("{}°C {}% - Включение инфракрасной лампы".format(temp, humidity))
 
-        # Через DELAY_HEAT_LAMP_SLEEP минут - отключаем дежурное
-        else:
-            HEAT_LAMP.off()
+#         # Через DELAY_HEAT_LAMP_SLEEP минут - отключаем дежурное
+#         else:
+#             HEAT_LAMP.off()
 
-            writeLog("{}°C {}% - Отключение инфракрасной лампы".format(temp, humidity))
+#             writeLog("{}°C {}% - Отключение инфракрасной лампы".format(temp, humidity))
 
-        # чтобы одновременно не срабатывали сразу несколько реле
-        time.sleep(5)
+#         # чтобы одновременно не срабатывали сразу несколько реле
+#         time.sleep(5)
 
-        # отключаем основное освещение
-        MAIN_LAMP.off()
+#         # отключаем основное освещение
+#         MAIN_LAMP.off()
 
-        writeLog("{}°C {}% - Отключение основного".format(temp, humidity))
+#         writeLog("{}°C {}% - Отключение основного".format(temp, humidity))
