@@ -1,79 +1,164 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-   <div class="container-fluid">
-      <div class="container-fluid">
-         <div class="row">
-            <div class="col-md-12">
-               <h4>
-                  Текущее время
-               </h4>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-               <h4 class="text-success">
-                  Основной свет
-               </h4>
-            </div>
-            <div class="col-md-6">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
 
-               <button type="button" class="btn btn-sm btn-primary">
-                  Отключить
-               </button>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-               <h4 class="text-danger">
-                  Инфракрасная лампа
-               </h4>
-            </div>
-            <div class="col-md-6">
+  <title>Умный курятник 2.0</title>
+</head>
 
-               <button type="button" class="btn btn-sm btn-primary">
-                  Включить
-               </button>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-6">
-               <h4 class="text-danger">
-                  Отопление
-               </h4>
-            </div>
-            <div class="col-md-6">
-
-               <button type="button" class="btn btn-sm btn-primary">
-                  Включить
-               </button>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-md-12">
-
-               <button type="button" class="btn btn-danger btn-sm btn-block">
-                  Включить автоматическое управление
-               </button>
-            </div>
-         </div>
+<body>
+  <div class="container-fluid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <h4>
+            <p>{{time}}</p>
+            <p>{{temp}}°C {{hum}}%</p>
+          </h4>
+        </div>
       </div>
-   </div>
+      <div class="row">
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+        {% if main_lamp %}
+        <div class="col-md-6">
+          <h4 class="text-success">
+            Основной свет ВКЛЮЧЕН
+          </h4>
+        </div>
+        <div class="col-md-6">
+
+          <a href="/main_lamp/off">
+            <button type="button" class="btn btn-sm btn-primary btn-block">
+              </p>Отключить
+              <p>
+            </button>
+          </a>
+        </div>
+        {% else %}
+        <div class="col-md-6">
+          <h4 class="text-danger">
+            Основной свет ОТКЛЮЧЕН
+          </h4>
+        </div>
+        <div class="col-md-6">
+
+          <a href="/main_lamp/on">
+            <button type="button" class="btn btn-sm btn-primary btn-block">
+              </p>Включить
+              <p>
+            </button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      <p></p>
+      <div class="row">
+        {% if heat_lamp %}
+        <div class="col-md-6">
+          <h4 class="text-success">
+            Инфракрасная лампа Включена
+          </h4>
+        </div>
+        <div class="col-md-6">
+
+          <a href="/heat_lamp/off">
+            <button type="button" class="btn btn-sm btn-primary btn-block">
+              </p>Отключить
+              <p>
+            </button>
+          </a>
+        </div>
+        {% else %}
+        <div class="col-md-6">
+          <h4 class="text-danger">
+            Инфракрасная лампа ОТКЛЮЧЕНА
+          </h4>
+        </div>
+        <div class="col-md-6">
+
+          <a href="/heat_lamp/on">
+            <button type="button" class="btn btn-sm btn-primary btn-block">
+              </p>Включить
+              <p>
+            </button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      <p></p>
+      <div class="row">
+        {% if radiator %}
+        <div class="col-md-6">
+          <h4 class="text-success">
+            Отопление ВКЛЮЧЕНО
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <a href="/radiator/off">
+          <button type="button" class="btn btn-sm btn-primary btn-block">
+            </p>Отключить
+            <p>
+          </button>
+          </a>
+        </div>
+        {% else %}
+        <div class="col-md-6">
+          <h4 class="text-danger">
+            Отопление ОТКЛЮЧЕНО
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <a href="/radiator/on">
+          <button type="button" class="btn btn-sm btn-primary btn-block">
+            </p>Включить
+            <p>
+          </button>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+      <p>&nbsp;</p>
+        <div class="row">
+          {% if auto %}
+          <div class="col-md-12">
+          <a href="/stop">
+          <button type="button" class="btn btn-danger btn-sm btn-block">
+            </p>ОТКЛЮЧИТЬ автоматическое управление
+            <p>
+          </button>
+          </a>
+          {% else %}
+
+          <div class="col-md-12">
+          <a href="/start">
+          <button type="button" class="btn btn-success btn-sm btn-block">
+            </p>ВКЛЮЧИТЬ автоматическое управление
+            <p>
+          </button>
+          </a>
+          {% endif %}
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>

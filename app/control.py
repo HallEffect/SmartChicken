@@ -10,14 +10,14 @@ from gpiozero import LED
 import Adafruit_DHT
 
 
-# Радиатор отопления
-RADIATOR = LED(16)
+# # Радиатор отопления
+# RADIATOR = LED(16)
 
-# Основное освещение
-MAIN_LAMP = LED(20)
+# # Основное освещение
+# MAIN_LAMP = LED(20)
 
-# Инфракрасная лампа
-HEAT_LAMP = LED(21)
+# # Инфракрасная лампа
+# HEAT_LAMP = LED(21)
 
 # Датчик температуры и влажности
 TEMP_SENSOR_PIN = 2
@@ -58,7 +58,8 @@ def writeLog(msg):
 
 
 def getCurrentTempHum():
-    return Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_SENSOR_PIN)
+    return Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, TEMP_SENSOR_PIN, retries=15, delay_seconds=0.5)
+    # return 10, 20
 
 # while True:
 
